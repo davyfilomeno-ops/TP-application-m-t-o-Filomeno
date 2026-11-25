@@ -1,0 +1,14 @@
+ [
+    {
+        "nom": "Toulonjac",
+        "code": "12281",
+        "centre": {
+            "type": "Point",
+            "coordinates": [
+                2.0013,
+                44.3799
+            ]
+        }
+    }
+]      
+         
