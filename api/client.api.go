@@ -11,11 +11,7 @@ import (
 	"meteo/models"
 )
 
-// URL de base de l'API et identification de notre programme.
-const (
-	baseURL   = "https:https://geo.api.gouv.fr/decoupage-administratif/communes#name"
-	userAgent = "admin-geo"
-)
+
 
 // Un seul client HTTP, partagé par toutes les requêtes.
 var client = &http.Client{
@@ -66,15 +62,15 @@ func get(endpoint string, dest any) error {
 }
 
 // GetGeneration renvoie les communes de la première génération (endpoint /communes).
-func GetGeneration(generation int) ([]models.Comune, error) {
-	var communes []models.Comune
+func GetGeneration(generation int) ([]models.Commune, error) {
+	var communes []models.Commune
 	err := get("/communes", &communes)
 	return communes, err
 }
 
-// GetComune renvoie la fiche d'une commune (endpoint /communes/{id}).
-func GetComune(id int) (models.Comune, error) {
-	var comune models.Comune
-	err := get(fmt.Sprintf("/communes/%d", id), &comune)
-	return comune, err
+// GetCommune renvoie la fiche d'une commune (endpoint /communes/{id}).
+func GetCommune(id int) (models.Commune, error) {
+	var commune models.Commune
+	err := get(fmt.Sprintf("/communes/%d", id), &commune)
+	return commune, err
 }

@@ -1,3 +1,5 @@
+package services
+
 import (
 	"strconv"
 
@@ -6,15 +8,15 @@ import (
 )
 
 // GetFirstGeneration renvoie les communes de la première génération.
-func GetFirstGeneration() ([]models.Comune, error) {
+func GetFirstGeneration() ([]models.Commune, error) {
 	return api.GetGeneration(1)
 }
 
-// GetComune vérifie l'identifiant reçu dans l'URL, puis appelle l'API.
-func GetComune(idParam string) (models.Comune, error) {
+// GetCommune vérifie l'identifiant reçu dans l'URL, puis appelle l'API.
+func GetCommune(idParam string) (models.Commune, error) {
 	id, err := strconv.Atoi(idParam)
 	if err != nil || id < 1 {
-		return models.Comune{}, models.ErrBadRequest
+		return models.Commune{}, models.ErrBadRequest
 	}
-	return api.GetComune(id)
+	return api.GetCommune(id)
 }

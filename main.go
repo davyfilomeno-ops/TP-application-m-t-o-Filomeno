@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"pokedex/helpers"
-	"pokedex/routes"
+	"meteo/helpers"
+	"meteo/routes"
 )
 
 func main() {

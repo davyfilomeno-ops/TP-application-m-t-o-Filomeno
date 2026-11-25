@@ -1,0 +1,25 @@
+{{define "list"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Météo | Liste des communes</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <h1>Météo | Liste des communes</h1>
+  <ul class="grid">
+    {{range .}}
+      <li class="card">
+        <a href="/communes/{{.Code}}">
+          <img src="{{.Sprites.Regular}}" alt="{{.Name}}">
+          <span>#{{.Code}} {{.Name}}</span>
+        </a>
+      </li>
+    {{else}}
+      <li>Aucune commune à afficher.</li>
+    {{end}}
+  </ul>
+</body>
+</html>
+{{end}}
