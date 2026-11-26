@@ -28,11 +28,12 @@
           <label class="sr-only" for="nom">Nom de la commune</label>
           <div class="search-control">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="nom" name="nom" type="search" placeholder="Ex. Aix-en-Provence" autocomplete="off" required>
+            <input id="nom" name="nom" type="search" placeholder="Ex. Aix-en-Provence" autocomplete="off" aria-autocomplete="list" aria-controls="commune-suggestions" aria-expanded="false" required>
             <button class="button button-search" type="submit">
               <span>Rechercher</span><span aria-hidden="true">→</span>
             </button>
           </div>
+          <ul class="suggestion-list" id="commune-suggestions" role="listbox" aria-label="Communes correspondantes" hidden></ul>
           <p class="search-feedback" data-search-feedback aria-live="polite">Saisissez le nom d'une commune pour commencer.</p>
         </form>
 

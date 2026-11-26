@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"net/url"
 
 	"meteo/models"
@@ -15,7 +16,15 @@ const (
 func GetCommunesByName(nomCommune string) ([]models.Commune, error) {
 	query := url.Values{}
 	query.Set("nom", nomCommune)
-	return getCommunes(query)
+	return getCommunes(query, "nom,code")
+}
+
+// GetCommuneSuggestions renvoie les résultats de recherche nécessaires à l'autocomplétion.
+func GetCommuneSuggestions(ctx context.Context, prefix string) ([]models.Commune, error) {
+	query := url.Values{}
+	query.Set("nom", prefix)
+	query.Set("limit", "10000")
+	return getCommunesWithContext(ctx, query, "nom,code")
 }
 
 // GetCommune renvoie la commune correspondant à son code.
@@ -23,7 +32,7 @@ func GetCommune(code string) (models.Commune, error) {
 	query := url.Values{}
 	query.Set("code", code)
 
-	communes, err := getCommunes(query)
+	communes, err := getCommunes(query, "nom,code,centre")
 	if err != nil {
 		return models.Commune{}, err
 	}
@@ -33,9 +42,13 @@ func GetCommune(code string) (models.Commune, error) {
 	return communes[0], nil
 }
 
-func getCommunes(query url.Values) ([]models.Commune, error) {
-	query.Set("fields", "nom,code,centre")
+func getCommunes(query url.Values, fields string) ([]models.Commune, error) {
+	return getCommunesWithContext(context.Background(), query, fields)
+}
+
+func getCommunesWithContext(ctx context.Context, query url.Values, fields string) ([]models.Commune, error) {
+	query.Set("fields", fields)
 	var communes []models.Commune
-	err := get("/communes?"+query.Encode(), &communes)
+	err := getWithContext(ctx, "/communes?"+query.Encode(), &communes)
 	return communes, err
 }

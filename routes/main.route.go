@@ -22,6 +22,7 @@ func MainRouter() *http.ServeMux {
 }
 
 func comuneRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("GET /api/communes/suggestions", controllers.SuggestCommunes)
 	mux.HandleFunc("GET /communes", controllers.ListCommunes)
 	mux.HandleFunc("GET /communes/{id}", controllers.ShowCommune)
 }

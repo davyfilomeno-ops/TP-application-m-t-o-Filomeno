@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -13,16 +14,24 @@ import (
 
 // Un seul client HTTP, partagé par toutes les requêtes.
 var client = &http.Client{
-	Timeout: 5 * time.Second,
+	Timeout: 15 * time.Second,
 }
 
 // get envoie une requête GET vers l'endpoint et décode la réponse dans dest.
 func get(endpoint string, dest any) error {
-	return getURL(baseURL+endpoint, dest)
+	return getWithContext(context.Background(), endpoint, dest)
+}
+
+func getWithContext(ctx context.Context, endpoint string, dest any) error {
+	return getURLWithContext(ctx, baseURL+endpoint, dest)
 }
 
 func getURL(requestURL string, dest any) error {
-	request, err := http.NewRequest(http.MethodGet, requestURL, nil)
+	return getURLWithContext(context.Background(), requestURL, dest)
+}
+
+func getURLWithContext(ctx context.Context, requestURL string, dest any) error {
+	request, err := http.NewRequestWithContext(ctx, http.MethodGet, requestURL, nil)
 	if err != nil {
 		return fmt.Errorf("création de la requête : %w", err)
 	}
@@ -31,6 +40,9 @@ func getURL(requestURL string, dest any) error {
 
 	response, err := client.Do(request)
 	if err != nil {
+		if errors.Is(err, context.Canceled) {
+			return err
+		}
 		var netErr net.Error
 		if errors.As(err, &netErr) && netErr.Timeout() {
 			return models.ErrTimeout

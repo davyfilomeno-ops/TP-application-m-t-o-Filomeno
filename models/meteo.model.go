@@ -12,11 +12,6 @@ type Meteo struct {
 	Daily                Daily      `json:"daily"`
 }
 
-type CommuneMeteo struct {
-	Commune Commune `json:"commune"`
-	Meteo   Meteo   `json:"meteo"`
-}
-
 type DailyUnits struct {
 	Time             string `json:"time"`
 	WeatherCode      string `json:"weather_code"`

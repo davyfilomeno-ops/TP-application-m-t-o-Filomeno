@@ -42,6 +42,23 @@
         <div class="weather-glow" aria-hidden="true"></div>
       </section>
 
+      <section class="map-section" data-reveal>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow eyebrow-dark">LOCALISATION</p>
+            <h2>La commune sur la carte</h2>
+          </div>
+        </div>
+        <iframe
+          class="weather-map"
+          src="{{.MapURL}}"
+          title="Carte OpenStreetMap de {{.Commune.Name}}"
+          width="100%"
+          height="400"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </section>
+
       <section class="forecast-section" data-reveal>
         <div class="section-heading">
           <div>
@@ -72,7 +89,6 @@
       <span>Données météo fournies par Open-Meteo</span>
     </footer>
   </div>
-  <script src="/static/js/app.js" defer></script>
 </body>
 </html>
 {{end}}
