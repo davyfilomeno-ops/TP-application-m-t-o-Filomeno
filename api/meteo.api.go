@@ -9,7 +9,6 @@ import (
 
 const meteoBaseURL = "https://api.open-meteo.com/v1/forecast"
 
-// GetMeteo renvoie les prévisions journalières aux coordonnées données.
 func GetMeteo(latitude, longitude float64) (models.Meteo, error) {
 	query := url.Values{}
 	query.Set("latitude", strconv.FormatFloat(latitude, 'f', -1, 64))

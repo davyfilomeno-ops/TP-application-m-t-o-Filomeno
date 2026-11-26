@@ -12,14 +12,12 @@ const (
 	userAgent = "admin-geo"
 )
 
-// GetCommunesByName renvoie les communes correspondant au nom recherché.
 func GetCommunesByName(nomCommune string) ([]models.Commune, error) {
 	query := url.Values{}
 	query.Set("nom", nomCommune)
 	return getCommunes(query, "nom,code")
 }
 
-// GetCommuneSuggestions renvoie les résultats de recherche nécessaires à l'autocomplétion.
 func GetCommuneSuggestions(ctx context.Context, prefix string) ([]models.Commune, error) {
 	query := url.Values{}
 	query.Set("nom", prefix)
@@ -27,7 +25,6 @@ func GetCommuneSuggestions(ctx context.Context, prefix string) ([]models.Commune
 	return getCommunesWithContext(ctx, query, "nom,code")
 }
 
-// GetCommune renvoie la commune correspondant à son code.
 func GetCommune(code string) (models.Commune, error) {
 	query := url.Values{}
 	query.Set("code", code)

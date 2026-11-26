@@ -12,12 +12,10 @@ import (
 	"meteo/models"
 )
 
-// Un seul client HTTP, partagé par toutes les requêtes.
 var client = &http.Client{
 	Timeout: 15 * time.Second,
 }
 
-// get envoie une requête GET vers l'endpoint et décode la réponse dans dest.
 func get(endpoint string, dest any) error {
 	return getWithContext(context.Background(), endpoint, dest)
 }
