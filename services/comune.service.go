@@ -1,22 +1,22 @@
 package services
 
 import (
-	"strconv"
+	"strings"
 
 	"meteo/api"
 	"meteo/models"
 )
 
-// GetFirstGeneration renvoie les communes de la première génération.
-func GetFirstGeneration() ([]models.Commune, error) {
-	return api.GetGeneration(1)
+// ListCommunes renvoie les communes correspondant au nom recherché.
+func ListCommunes(nomCommune string) ([]models.Commune, error) {
+	return api.GetCommunesByName(nomCommune)
 }
 
 // GetCommune vérifie l'identifiant reçu dans l'URL, puis appelle l'API.
-func GetCommune(idParam string) (models.Commune, error) {
-	id, err := strconv.Atoi(idParam)
-	if err != nil || id < 1 {
+func GetCommune(code string) (models.Commune, error) {
+	code = strings.TrimSpace(code)
+	if code == "" {
 		return models.Commune{}, models.ErrBadRequest
 	}
-	return api.GetCommune(id)
+	return api.GetCommune(code)
 }

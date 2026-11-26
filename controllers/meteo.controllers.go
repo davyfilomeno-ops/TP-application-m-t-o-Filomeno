@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"strings"
 
 	"meteo/helpers"
 	"meteo/models"
@@ -12,7 +13,12 @@ import (
 
 // ListCommunes affiche la liste des communes de la première génération.
 func ListCommunes(w http.ResponseWriter, r *http.Request) {
-	communes, err := services.GetFirstGeneration()
+	nomCommune := strings.TrimSpace(r.URL.Query().Get("nom"))
+	if nomCommune == "" {
+		nomCommune = ""
+	}
+
+	communes, err := services.ListCommunes(nomCommune)
 	if err != nil {
 		renderErrorSevice(w, err)
 		return
@@ -22,12 +28,12 @@ func ListCommunes(w http.ResponseWriter, r *http.Request) {
 
 // ShowCommune affiche la fiche de la commune dont l'identifiant est dans l'URL.
 func ShowCommune(w http.ResponseWriter, r *http.Request) {
-	commune, err := services.GetCommune(r.PathValue("id"))
+	communeMeteo, err := services.GetCommuneMeteo(r.PathValue("id"))
 	if err != nil {
 		renderErrorSevice(w, err)
 		return
 	}
-	helpers.Render(w, http.StatusOK, "commune", commune)
+	helpers.Render(w, http.StatusOK, "meteo", communeMeteo)
 }
 
 // NotFound affiche la page 404 pour toute URL inconnue du site.
@@ -43,7 +49,7 @@ func renderErrorSevice(w http.ResponseWriter, err error) {
 	case errors.Is(err, models.ErrBadRequest):
 		helpers.RenderError(w, http.StatusBadRequest, "Numéro de commune invalide.")
 	case errors.Is(err, models.ErrTimeout), errors.Is(err, models.ErrUnavailable):
-		log.Println("API Tyradex :", err)
+		log.Println("API externe :", err)
 		helpers.RenderError(w, http.StatusServiceUnavailable, "Service momentanément indisponible.")
 	default:
 		log.Println("Erreur inattendue :", err)

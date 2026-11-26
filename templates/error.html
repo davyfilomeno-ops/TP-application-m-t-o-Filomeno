@@ -3,13 +3,29 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Erreur {{.Code}} – meteo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14243a">
+  <title>Erreur {{.Code}} | Météo locale</title>
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body>
-  <h1>Erreur {{.Code}}</h1>
-  <p>{{.Message}}</p>
-  <a href="/">← Retour à l'accueil</a>
+<body class="page page-error">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/communes" aria-label="Météo locale, accueil">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>MÉTÉO <strong>LOCALE</strong></span>
+      </a>
+    </header>
+    <main class="error-main">
+      <section class="error-card">
+        <span class="error-code">{{.Code}}</span>
+        <p class="eyebrow eyebrow-dark">OUPS, UN PETIT CONTRETEMPS</p>
+        <h1>Impossible d'afficher la météo</h1>
+        <p>{{.Message}}</p>
+        <a class="button button-dark" href="/communes">Retour aux communes <span aria-hidden="true">→</span></a>
+      </section>
+    </main>
+  </div>
 </body>
 </html>
 {{end}}

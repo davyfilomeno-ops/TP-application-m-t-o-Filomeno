@@ -1,0 +1,78 @@
+{{define "meteo"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14243a">
+  <title>{{.Commune.Name}} | Météo locale</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="page page-weather">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/communes" aria-label="Météo locale, accueil">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>MÉTÉO <strong>LOCALE</strong></span>
+      </a>
+      <a class="back-link" href="/communes"><span aria-hidden="true">←</span> Changer de commune</a>
+    </header>
+
+    <main>
+      <section class="weather-hero" data-reveal>
+        <div class="weather-location">
+          <p class="eyebrow"><span class="eyebrow-line"></span> VOTRE MÉTÉO LOCALE</p>
+          <h1>{{.Commune.Name}}</h1>
+          <p class="location-code">Commune {{.Commune.Code}}</p>
+          <div class="coordinates">
+            <span>Latitude <strong>{{.Meteo.Latitude}}</strong></span>
+            <span class="coordinate-divider"></span>
+            <span>Longitude <strong>{{.Meteo.Longitude}}</strong></span>
+          </div>
+        </div>
+        <div class="current-weather">
+          <span class="current-label">Aujourd'hui</span>
+          <span class="current-icon" data-weather-symbol data-weather-code="{{index .Meteo.Daily.WeatherCode 0}}" aria-hidden="true">☀</span>
+          <span class="current-description" data-weather-description data-weather-code="{{index .Meteo.Daily.WeatherCode 0}}">Prévisions locales</span>
+          <div class="current-temperatures">
+            <strong>{{index .Meteo.Daily.Temperature2mMax 0}}°</strong>
+            <span>{{index .Meteo.Daily.Temperature2mMin 0}}°</span>
+          </div>
+        </div>
+        <div class="weather-glow" aria-hidden="true"></div>
+      </section>
+
+      <section class="forecast-section" data-reveal>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow eyebrow-dark">LA SEMAINE À VENIR</p>
+            <h2>Prévisions sur 7 jours</h2>
+          </div>
+          <span class="forecast-timezone">{{.Meteo.Timezone}}</span>
+        </div>
+
+        <div class="forecast-grid">
+          {{range $index, $date := .Meteo.Daily.Time}}
+          <article class="forecast-card" data-forecast-card>
+            <p class="forecast-date" data-forecast-date>{{$date}}</p>
+            <span class="forecast-icon" data-weather-symbol data-weather-code="{{index $.Meteo.Daily.WeatherCode $index}}" aria-hidden="true">☀</span>
+            <p class="forecast-description" data-weather-description data-weather-code="{{index $.Meteo.Daily.WeatherCode $index}}">Code météo {{index $.Meteo.Daily.WeatherCode $index}}</p>
+            <div class="temperature-range">
+              <span class="temperature-high">{{index $.Meteo.Daily.Temperature2mMax $index}}°</span>
+              <span class="temperature-low">{{index $.Meteo.Daily.Temperature2mMin $index}}°</span>
+            </div>
+          </article>
+          {{end}}
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© Météo Locale</span>
+      <span>Données météo fournies par Open-Meteo</span>
+    </footer>
+  </div>
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
+{{end}}

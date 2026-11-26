@@ -10,12 +10,12 @@ var (
 )
 
 type Commune struct {
-	Name        string `json:"nom"`
-	Code        string `json:"code"`
-	Departement []Departement `json:"Departement"`
+	Name   string `json:"nom"`
+	Code   string `json:"code"`
+	Centre Centre `json:"centre"`
 }
 
-type Departement struct {
-	Code string `json:"code"`
-	Name  string `json:"nom"`
+type Centre struct {
+	Type        string    `json:"type"`
+	Coordinates []float64 `json:"coordinates"`
 }
