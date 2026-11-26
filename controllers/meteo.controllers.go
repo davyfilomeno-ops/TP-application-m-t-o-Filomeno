@@ -14,7 +14,6 @@ import (
 	"meteo/services"
 )
 
-// ListCommunes affiche la liste des communes de la première génération.
 func ListCommunes(w http.ResponseWriter, r *http.Request) {
 	nomCommune := strings.TrimSpace(r.URL.Query().Get("nom"))
 
@@ -26,7 +25,6 @@ func ListCommunes(w http.ResponseWriter, r *http.Request) {
 	helpers.Render(w, http.StatusOK, "list", communes)
 }
 
-// SuggestCommunes renvoie les communes qui commencent par le texte saisi.
 func SuggestCommunes(w http.ResponseWriter, r *http.Request) {
 	prefix := strings.TrimSpace(r.URL.Query().Get("nom"))
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -68,7 +66,6 @@ func SuggestCommunes(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// ShowCommune affiche la fiche de la commune dont l'identifiant est dans l'URL.
 func ShowCommune(w http.ResponseWriter, r *http.Request) {
 	communeMeteo, err := services.GetCommuneMeteo(r.PathValue("id"))
 	if err != nil {
@@ -78,12 +75,11 @@ func ShowCommune(w http.ResponseWriter, r *http.Request) {
 	helpers.Render(w, http.StatusOK, "meteo", communeMeteo)
 }
 
-// NotFound affiche la page 404 pour toute URL inconnue du site.
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderError(w, http.StatusNotFound, "Cette page n'existe pas.")
 }
 
-// renderAPIError traduit une erreur connue en page d'erreur, sur la route même.
+
 func renderErrorSevice(w http.ResponseWriter, err error) {
 	switch {
 	case errors.Is(err, models.ErrNotFound):

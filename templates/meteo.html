@@ -32,8 +32,8 @@
         </div>
         <div class="current-weather">
           <span class="current-label">Aujourd'hui</span>
-          <span class="current-icon" data-weather-symbol data-weather-code="{{index .Meteo.Daily.WeatherCode 0}}" aria-hidden="true">☀</span>
-          <span class="current-description" data-weather-description data-weather-code="{{index .Meteo.Daily.WeatherCode 0}}">Prévisions locales</span>
+          <span class="current-icon" aria-hidden="true">{{weatherIcon (index .Meteo.Daily.WeatherCode 0)}}</span>
+          <span class="current-description">{{weatherLabel (index .Meteo.Daily.WeatherCode 0)}}</span>
           <div class="current-temperatures">
             <strong>{{index .Meteo.Daily.Temperature2mMax 0}}°</strong>
             <span>{{index .Meteo.Daily.Temperature2mMin 0}}°</span>
@@ -71,9 +71,9 @@
         <div class="forecast-grid">
           {{range $index, $date := .Meteo.Daily.Time}}
           <article class="forecast-card" data-forecast-card>
-            <p class="forecast-date" data-forecast-date>{{$date}}</p>
-            <span class="forecast-icon" data-weather-symbol data-weather-code="{{index $.Meteo.Daily.WeatherCode $index}}" aria-hidden="true">☀</span>
-            <p class="forecast-description" data-weather-description data-weather-code="{{index $.Meteo.Daily.WeatherCode $index}}">Code météo {{index $.Meteo.Daily.WeatherCode $index}}</p>
+            <p class="forecast-date">{{formatDate $date}}</p>
+            <span class="forecast-icon" aria-hidden="true">{{weatherIcon (index $.Meteo.Daily.WeatherCode $index)}}</span>
+            <p class="forecast-description">{{weatherLabel (index $.Meteo.Daily.WeatherCode $index)}}</p>
             <div class="temperature-range">
               <span class="temperature-high">{{index $.Meteo.Daily.Temperature2mMax $index}}°</span>
               <span class="temperature-low">{{index $.Meteo.Daily.Temperature2mMin $index}}°</span>

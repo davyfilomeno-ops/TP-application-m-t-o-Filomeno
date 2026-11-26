@@ -4,11 +4,10 @@ import (
 	"fmt"
 
 	"meteo/api"
-	maps "meteo/api/map"
+	"meteo/map"
 	"meteo/models"
 )
 
-// GetCommuneMeteo récupère la commune puis ses prévisions à son centre géographique.
 func GetCommuneMeteo(code string) (models.PageData, error) {
 	commune, err := GetCommune(code)
 	if err != nil {

@@ -24,17 +24,16 @@
         <h1>Le temps qu'il fait,<br><span>là où vous êtes.</span></h1>
         <p class="hero-copy">Trouvez votre commune et découvrez ses prévisions locales pour les prochains jours.</p>
 
-        <form class="search-form" action="/communes" method="get" data-search-form>
+        <form class="search-form" action="/communes" method="get">
           <label class="sr-only" for="nom">Nom de la commune</label>
           <div class="search-control">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="nom" name="nom" type="search" placeholder="Ex. Aix-en-Provence" autocomplete="off" aria-autocomplete="list" aria-controls="commune-suggestions" aria-expanded="false" required>
+            <input id="nom" name="nom" type="search" placeholder="Ex. Aix-en-Provence" required>
             <button class="button button-search" type="submit">
               <span>Rechercher</span><span aria-hidden="true">→</span>
             </button>
           </div>
-          <ul class="suggestion-list" id="commune-suggestions" role="listbox" aria-label="Communes correspondantes" hidden></ul>
-          <p class="search-feedback" data-search-feedback aria-live="polite">Saisissez le nom d'une commune pour commencer.</p>
+          <p class="search-feedback">Saisissez le nom d'une commune puis cliquez sur Rechercher.</p>
         </form>
 
         <div class="hero-footnote"><span aria-hidden="true">✦</span> Des prévisions adaptées à chaque ville</div>
@@ -48,7 +47,7 @@
             <p class="eyebrow eyebrow-dark">SÉLECTION</p>
             <h2>Choisissez votre commune</h2>
           </div>
-          <span class="result-count" data-result-count></span>
+          <span class="result-count">{{len .}} résultat{{if ne (len .) 1}}s{{end}}</span>
         </div>
 
         <ul class="commune-grid" data-commune-list>
@@ -83,7 +82,6 @@
       <span>Les prévisions, près de chez vous.</span>
     </footer>
   </div>
-  <script src="/static/js/app.js" defer></script>
 </body>
 </html>
 {{end}}

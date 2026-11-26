@@ -8,12 +8,10 @@ import (
 	"meteo/models"
 )
 
-// ListCommunes renvoie les communes correspondant au nom recherché.
 func ListCommunes(nomCommune string) ([]models.Commune, error) {
 	return api.GetCommunesByName(nomCommune)
 }
 
-// SuggestCommunes conserve uniquement les communes dont le nom commence par le préfixe.
 func SuggestCommunes(ctx context.Context, prefix string) ([]models.Commune, error) {
 	communes, err := api.GetCommuneSuggestions(ctx, prefix)
 	if err != nil {
@@ -30,7 +28,6 @@ func SuggestCommunes(ctx context.Context, prefix string) ([]models.Commune, erro
 	return suggestions, nil
 }
 
-// GetCommune vérifie l'identifiant reçu dans l'URL, puis appelle l'API.
 func GetCommune(code string) (models.Commune, error) {
 	code = strings.TrimSpace(code)
 	if code == "" {
